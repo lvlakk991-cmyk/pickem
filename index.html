@@ -2,339 +2,250 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
-    <meta
-        name="theme-color"
-        content="#f5c400"
-    >
-
-    <title>S2 Pick'em</title>
+    <title>ASCEND PICK'EM</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
     <!-- HEADER -->
     <header class="header">
+        <div>
+            <div class="brand">ASCEND</div>
+            <div class="brand-sub">PICK'EM</div>
+        </div>
 
-        <div class="brand">
-            <div class="brand-logo">
-                P
-            </div>
-
+        <div class="user-box">
+            <div id="userAvatar" class="avatar">?</div>
             <div>
-                <div class="brand-title">PICK'EM</div>
-                <div class="brand-subtitle">S2 ESPORTS</div>
+                <div id="userName">Игрок</div>
+                <div id="userPoints">0 PTS</div>
             </div>
         </div>
-
-        <div class="points-badge">
-            <span>⚡</span>
-            <span id="headerPoints">0</span>
-        </div>
-
     </header>
 
 
+    <!-- LOADING -->
+    <section id="loading" class="loading">
+        <div class="loader"></div>
+        <div>Загрузка...</div>
+    </section>
+
+
     <!-- MAIN -->
-    <main class="content">
+    <main id="content" class="content hidden">
 
-        <!-- ================= PICKEM ================= -->
-
-        <section
-            id="page-pickem"
-            class="page active"
-        >
+        <!-- PICK'EM -->
+        <section id="page-pickem" class="page active">
 
             <div class="hero-card">
+                <div class="hero-label">АКТИВНЫЙ ТУРНИР</div>
 
-                <div class="hero-label">
-                    🏆 ACTIVE TOURNAMENT
+                <h1 id="tournamentName">Загрузка...</h1>
+
+                <div id="tournamentStage" class="stage">
+                    Групповая стадия
                 </div>
 
-                <h1 id="tournamentName">
-                    S2 PICK'EM
-                </h1>
+                <div class="progress-title">
+                    ПРОГРЕСС ДОСТИЖЕНИЯ
+                </div>
 
-                <p id="tournamentStage">
-                    Групповая стадия
-                </p>
+                <div class="progress">
+                    <div id="progressBar" class="progress-fill"></div>
+                </div>
 
+                <div class="progress-info">
+                    <span id="progressPoints">0 PTS</span>
+                    <span>500 PTS</span>
+                </div>
             </div>
 
-
-            <!-- PROGRESS -->
 
             <div class="section-title">
-                <span>ПРОГРЕСС</span>
-                <span
-                    id="progressText"
-                    class="yellow-text"
-                >
-                    0 / 500
-                </span>
+                <span>🔮 МАТЧИ</span>
             </div>
 
-            <div class="progress-card">
+            <div id="matchesList" class="matches-list">
+            </div>
 
-                <div class="progress-top">
+        </section>
 
-                    <span>
-                        Уровень
-                    </span>
 
-                    <strong id="achievement">
-                        BEGINNER
-                    </strong>
+        <!-- DAILY -->
+        <section id="page-daily" class="page">
 
+            <div class="page-title">
+                <span>⚡</span>
+                <div>
+                    <h2>ЕЖЕДНЕВКА</h2>
+                    <p>Выполняй задания и получай очки</p>
+                </div>
+            </div>
+
+            <div id="dailyContainer">
+            </div>
+
+        </section>
+
+
+        <!-- TOP -->
+        <section id="page-top" class="page">
+
+            <div class="page-title">
+                <span>🏆</span>
+                <div>
+                    <h2>ТОП</h2>
+                    <p>Лучшие игроки Pick'em</p>
+                </div>
+            </div>
+
+            <div id="topList" class="top-list">
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+        <section id="page-stats" class="page">
+
+            <div class="page-title">
+                <span>📊</span>
+                <div>
+                    <h2>СТАТИСТИКА</h2>
+                    <p>Твоя статистика</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-value" id="statPoints">0</div>
+                    <div class="stat-label">ОЧКОВ</div>
                 </div>
 
-                <div class="progress-bar">
-
-                    <div
-                        id="progressBar"
-                        class="progress-fill"
-                    ></div>
-
+                <div class="stat-card">
+                    <div class="stat-value" id="statAccuracy">0%</div>
+                    <div class="stat-label">ТОЧНОСТЬ</div>
                 </div>
 
-                <div class="tiers">
+                <div class="stat-card">
+                    <div class="stat-value" id="statPredictions">0</div>
+                    <div class="stat-label">ПРЕДСКАЗАНИЙ</div>
+                </div>
 
-                    <span>
-                        BEGINNER
-                    </span>
+                <div class="stat-card">
+                    <div class="stat-value" id="statCorrect">0</div>
+                    <div class="stat-label">ВЕРНЫХ</div>
+                </div>
 
-                    <span>
-                        PRO
-                    </span>
+            </div>
 
-                    <span>
-                        CHEATER
-                    </span>
+        </section>
 
-                    <span>
-                        GOD
-                    </span>
 
+        <!-- ADMIN -->
+        <section id="page-admin" class="page">
+
+            <div class="page-title">
+                <span>⚙️</span>
+                <div>
+                    <h2>АДМИН-ПАНЕЛЬ</h2>
+                    <p>Управление Pick'em</p>
+                </div>
+            </div>
+
+
+            <!-- TOURNAMENTS -->
+            <div class="admin-section">
+
+                <div class="admin-section-header">
+                    <div>
+                        <h3>🏆 Турниры</h3>
+                        <p>Создание и управление турнирами</p>
+                    </div>
+
+                    <button
+                        class="yellow-btn small"
+                        onclick="openTournamentModal()"
+                    >
+                        + Добавить
+                    </button>
+                </div>
+
+                <div id="adminTournaments">
                 </div>
 
             </div>
 
 
             <!-- MATCHES -->
+            <div class="admin-section">
 
-            <div class="section-header">
-
-                <div class="section-title">
-                    🔮 МАТЧИ
-                </div>
-
-                <span
-                    id="matchCount"
-                    class="counter"
-                >
-                    0
-                </span>
-
-            </div>
-
-            <div
-                id="matches"
-                class="matches"
-            ></div>
-
-        </section>
-
-
-        <!-- ================= DAILY ================= -->
-
-        <section
-            id="page-daily"
-            class="page"
-        >
-
-            <div class="page-title">
-                <span>⚡</span>
-                ЕЖЕДНЕВКА
-            </div>
-
-            <div class="daily-card">
-
-                <div class="daily-icon">
-                    ⚡
-                </div>
-
-                <div class="daily-content">
-
-                    <div class="daily-label">
-                        ЗАДАНИЕ НА СЕГОДНЯ
+                <div class="admin-section-header">
+                    <div>
+                        <h3>⚔️ Матчи</h3>
+                        <p>Добавление и удаление матчей</p>
                     </div>
 
-                    <h2 id="dailyTitle">
-                        Подпишись на канал
-                    </h2>
-
-                    <p id="dailyDescription">
-                        Выполни задание и получи дополнительные очки.
-                    </p>
-
+                    <button
+                        class="yellow-btn small"
+                        onclick="openMatchModal()"
+                    >
+                        + Добавить
+                    </button>
                 </div>
 
-            </div>
-
-            <div class="reward-card">
-
-                <div>
-                    НАГРАДА
-                </div>
-
-                <strong id="dailyReward">
-                    +25 PTS
-                </strong>
-
-            </div>
-
-            <button
-                id="dailyButton"
-                class="primary-button"
-                onclick="completeDaily()"
-            >
-                ✅ ВЫПОЛНИТЬ ЗАДАНИЕ
-            </button>
-
-        </section>
-
-
-        <!-- ================= TOP ================= -->
-
-        <section
-            id="page-top"
-            class="page"
-        >
-
-            <div class="page-title">
-                <span>🏆</span>
-                ТОП ИГРОКОВ
-            </div>
-
-            <div
-                id="leaderboard"
-                class="leaderboard"
-            ></div>
-
-        </section>
-
-
-        <!-- ================= STATS ================= -->
-
-        <section
-            id="page-stats"
-            class="page"
-        >
-
-            <div class="page-title">
-                <span>📊</span>
-                МОЯ СТАТИСТИКА
-            </div>
-
-            <div class="stats-grid">
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">
-                        ⚡
-                    </span>
-
-                    <strong id="statPoints">
-                        0
-                    </strong>
-
-                    <small>
-                        ОЧКОВ
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">
-                        🎯
-                    </span>
-
-                    <strong id="statAccuracy">
-                        0%
-                    </strong>
-
-                    <small>
-                        ТОЧНОСТЬ
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">
-                        🔮
-                    </span>
-
-                    <strong id="statPredictions">
-                        0
-                    </strong>
-
-                    <small>
-                        ПРОГНОЗОВ
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">
-                        ✅
-                    </span>
-
-                    <strong id="statCorrect">
-                        0
-                    </strong>
-
-                    <small>
-                        ВЕРНЫХ
-                    </small>
-
+                <div id="adminMatches">
                 </div>
 
             </div>
 
 
-            <div class="profile-card">
+            <!-- RESULTS -->
+            <div class="admin-section">
 
-                <div class="avatar">
-                    <span id="avatarLetter">
-                        P
-                    </span>
+                <div class="admin-section-header">
+                    <div>
+                        <h3>🏁 Результаты</h3>
+                        <p>Внесение результатов завершённых матчей</p>
+                    </div>
                 </div>
 
-                <div class="profile-info">
+                <div id="adminResults">
+                </div>
 
-                    <strong id="profileName">
-                        Игрок
-                    </strong>
+            </div>
 
-                    <span>
-                        Участник Pick'em
-                    </span>
 
+            <!-- DAILY -->
+            <div class="admin-section">
+
+                <div class="admin-section-header">
+                    <div>
+                        <h3>⚡ Ежедневные задания</h3>
+                        <p>Добавление и удаление ежедневок</p>
+                    </div>
+
+                    <button
+                        class="yellow-btn small"
+                        onclick="openDailyModal()"
+                    >
+                        + Добавить
+                    </button>
+                </div>
+
+                <div id="adminDaily">
                 </div>
 
             </div>
@@ -344,51 +255,53 @@
     </main>
 
 
-    <!-- NAVIGATION -->
-
-    <nav class="bottom-nav">
+    <!-- BOTTOM NAV -->
+    <nav id="bottomNav" class="bottom-nav hidden">
 
         <button
-            class="nav-item active"
+            class="nav-btn active"
             data-page="pickem"
+            onclick="showPage('pickem')"
         >
-
             <span>🎯</span>
             <small>PICK'EM</small>
-
         </button>
 
-
         <button
-            class="nav-item"
+            class="nav-btn"
             data-page="daily"
+            onclick="showPage('daily')"
         >
-
             <span>⚡</span>
-            <small>ЕЖЕДНЕВКА</small>
-
+            <small>ДЕНЬ</small>
         </button>
 
-
         <button
-            class="nav-item"
+            class="nav-btn"
             data-page="top"
+            onclick="showPage('top')"
         >
-
             <span>🏆</span>
             <small>ТОП</small>
-
         </button>
 
-
         <button
-            class="nav-item"
+            class="nav-btn"
             data-page="stats"
+            onclick="showPage('stats')"
         >
-
             <span>📊</span>
             <small>СТАТЫ</small>
+        </button>
 
+        <button
+            id="adminNav"
+            class="nav-btn admin-nav hidden"
+            data-page="admin"
+            onclick="showPage('admin')"
+        >
+            <span>⚙️</span>
+            <small>АДМИН</small>
         </button>
 
     </nav>
@@ -396,124 +309,76 @@
 </div>
 
 
-<!-- ================= PREDICTION MODAL ================= -->
+<!-- PREDICTION MODAL -->
+<div id="predictionModal" class="modal hidden">
 
-<div
-    id="predictionModal"
-    class="modal hidden"
->
+    <div class="modal-window">
 
-    <div
-        class="modal-overlay"
-        onclick="closePrediction()"
-    ></div>
-
-    <div class="modal-content">
-
-        <button
-            class="modal-close"
-            onclick="closePrediction()"
-        >
+        <button class="modal-close" onclick="closeModal('predictionModal')">
             ×
         </button>
 
-        <div class="modal-label">
-            🔮 ПРОГНОЗ
+        <div class="modal-title">
+            🔮 Предсказание
         </div>
 
-        <h2 id="modalMatchTitle">
-            Team A vs Team B
-        </h2>
-
-
-        <!-- WINNER -->
-
-        <div class="form-section">
-
-            <div class="form-label">
-                КТО ПОБЕДИТ?
-            </div>
-
-            <div class="team-buttons">
-
-                <button
-                    id="team1Button"
-                    class="team-button"
-                    onclick="selectWinner(1)"
-                >
-                    Team A
-                </button>
-
-                <button
-                    id="team2Button"
-                    class="team-button"
-                    onclick="selectWinner(2)"
-                >
-                    Team B
-                </button>
-
-            </div>
-
+        <div id="predictionMatch" class="modal-match">
         </div>
 
 
-        <!-- SCORE -->
+        <div class="input-label">
+            ПОБЕДИТЕЛЬ
+        </div>
 
-        <div class="form-section">
-
-            <div class="form-label">
-                ТОЧНЫЙ СЧЁТ
-            </div>
-
-            <div class="score-inputs">
-
-                <input
-                    id="score1"
-                    type="number"
-                    min="0"
-                    max="99"
-                    placeholder="0"
-                >
-
-                <span>:</span>
-
-                <input
-                    id="score2"
-                    type="number"
-                    min="0"
-                    max="99"
-                    placeholder="0"
-                >
-
-            </div>
-
+        <div id="winnerButtons" class="choice-grid">
         </div>
 
 
-        <!-- MVP -->
+        <div class="input-label">
+            ТОЧНЫЙ СЧЁТ
+        </div>
 
-        <div class="form-section">
-
-            <div class="form-label">
-                MVP МАТЧА
-            </div>
+        <div class="score-inputs">
 
             <input
-                id="mvpInput"
-                class="text-input"
-                type="text"
-                maxlength="32"
-                placeholder="Введите ник игрока"
+                id="score1"
+                type="number"
+                min="0"
+                max="99"
+                placeholder="0"
+            >
+
+            <span>:</span>
+
+            <input
+                id="score2"
+                type="number"
+                min="0"
+                max="99"
+                placeholder="0"
             >
 
         </div>
 
 
+        <div class="input-label">
+            MVP
+        </div>
+
+        <input
+            id="mvpInput"
+            class="text-input"
+            type="text"
+            maxlength="50"
+            placeholder="Ник игрока"
+        >
+
+
         <button
-            class="primary-button submit-button"
+            class="yellow-btn full"
             onclick="submitPrediction()"
         >
-            🔥 СОХРАНИТЬ ПРОГНОЗ
+            СОХРАНИТЬ ПРЕДСКАЗАНИЕ
         </button>
 
     </div>
@@ -521,14 +386,220 @@
 </div>
 
 
-<!-- TOAST -->
+<!-- TOURNAMENT MODAL -->
+<div id="tournamentModal" class="modal hidden">
 
-<div
-    id="toast"
-    class="toast"
->
-    <span id="toastText"></span>
+    <div class="modal-window">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('tournamentModal')"
+        >
+            ×
+        </button>
+
+        <div class="modal-title">
+            🏆 Новый турнир
+        </div>
+
+        <label>Название</label>
+
+        <input
+            id="tournamentNameInput"
+            class="text-input"
+            placeholder="Например: ASCEND S2"
+        >
+
+        <label>Стадия</label>
+
+        <input
+            id="tournamentStageInput"
+            class="text-input"
+            placeholder="Групповая стадия"
+        >
+
+        <button
+            class="yellow-btn full"
+            onclick="createTournament()"
+        >
+            СОЗДАТЬ ТУРНИР
+        </button>
+
+    </div>
+
 </div>
+
+
+<!-- MATCH MODAL -->
+<div id="matchModal" class="modal hidden">
+
+    <div class="modal-window">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('matchModal')"
+        >
+            ×
+        </button>
+
+        <div class="modal-title">
+            ⚔️ Новый матч
+        </div>
+
+        <label>Турнир</label>
+
+        <select id="matchTournament" class="text-input">
+        </select>
+
+        <label>Команда 1</label>
+
+        <input
+            id="team1Input"
+            class="text-input"
+            placeholder="Команда 1"
+        >
+
+        <label>Команда 2</label>
+
+        <input
+            id="team2Input"
+            class="text-input"
+            placeholder="Команда 2"
+        >
+
+        <label>Дата / время</label>
+
+        <input
+            id="matchTimeInput"
+            class="text-input"
+            placeholder="18.08 20:00"
+        >
+
+        <button
+            class="yellow-btn full"
+            onclick="createMatch()"
+        >
+            ДОБАВИТЬ МАТЧ
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT MODAL -->
+<div id="resultModal" class="modal hidden">
+
+    <div class="modal-window">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('resultModal')"
+        >
+            ×
+        </button>
+
+        <div class="modal-title">
+            🏁 Результат матча
+        </div>
+
+        <div id="resultMatch" class="modal-match">
+        </div>
+
+        <label>Победитель</label>
+
+        <select id="resultWinner" class="text-input">
+        </select>
+
+        <label>Счёт</label>
+
+        <div class="score-inputs">
+
+            <input
+                id="resultScore1"
+                type="number"
+                min="0"
+                placeholder="0"
+            >
+
+            <span>:</span>
+
+            <input
+                id="resultScore2"
+                type="number"
+                min="0"
+                placeholder="0"
+            >
+
+        </div>
+
+        <label>MVP</label>
+
+        <input
+            id="resultMvp"
+            class="text-input"
+            placeholder="Ник MVP"
+        >
+
+        <button
+            class="yellow-btn full"
+            onclick="saveResult()"
+        >
+            СОХРАНИТЬ РЕЗУЛЬТАТ
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- DAILY MODAL -->
+<div id="dailyModal" class="modal hidden">
+
+    <div class="modal-window">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('dailyModal')"
+        >
+            ×
+        </button>
+
+        <div class="modal-title">
+            ⚡ Новая ежедневка
+        </div>
+
+        <label>Задание</label>
+
+        <textarea
+            id="dailyDescription"
+            class="text-input textarea"
+            placeholder="Например: Сделайте прогноз на матч"
+        ></textarea>
+
+        <label>Награда</label>
+
+        <input
+            id="dailyPoints"
+            class="text-input"
+            type="number"
+            min="1"
+            placeholder="25"
+        >
+
+        <button
+            class="yellow-btn full"
+            onclick="createDaily()"
+        >
+            ДОБАВИТЬ
+        </button>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
 
 
 <script src="app.js"></script>
