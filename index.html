@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f5c400"
+    >
+
+    <title>S2 Pick'em</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="brand">
+            <div class="brand-logo">
+                P
+            </div>
+
+            <div>
+                <div class="brand-title">PICK'EM</div>
+                <div class="brand-subtitle">S2 ESPORTS</div>
+            </div>
+        </div>
+
+        <div class="points-badge">
+            <span>⚡</span>
+            <span id="headerPoints">0</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="content">
+
+        <!-- ================= PICKEM ================= -->
+
+        <section
+            id="page-pickem"
+            class="page active"
+        >
+
+            <div class="hero-card">
+
+                <div class="hero-label">
+                    🏆 ACTIVE TOURNAMENT
+                </div>
+
+                <h1 id="tournamentName">
+                    S2 PICK'EM
+                </h1>
+
+                <p id="tournamentStage">
+                    Групповая стадия
+                </p>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="section-title">
+                <span>ПРОГРЕСС</span>
+                <span
+                    id="progressText"
+                    class="yellow-text"
+                >
+                    0 / 500
+                </span>
+            </div>
+
+            <div class="progress-card">
+
+                <div class="progress-top">
+
+                    <span>
+                        Уровень
+                    </span>
+
+                    <strong id="achievement">
+                        BEGINNER
+                    </strong>
+
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        id="progressBar"
+                        class="progress-fill"
+                    ></div>
+
+                </div>
+
+                <div class="tiers">
+
+                    <span>
+                        BEGINNER
+                    </span>
+
+                    <span>
+                        PRO
+                    </span>
+
+                    <span>
+                        CHEATER
+                    </span>
+
+                    <span>
+                        GOD
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MATCHES -->
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    🔮 МАТЧИ
+                </div>
+
+                <span
+                    id="matchCount"
+                    class="counter"
+                >
+                    0
+                </span>
+
+            </div>
+
+            <div
+                id="matches"
+                class="matches"
+            ></div>
+
+        </section>
+
+
+        <!-- ================= DAILY ================= -->
+
+        <section
+            id="page-daily"
+            class="page"
+        >
+
+            <div class="page-title">
+                <span>⚡</span>
+                ЕЖЕДНЕВКА
+            </div>
+
+            <div class="daily-card">
+
+                <div class="daily-icon">
+                    ⚡
+                </div>
+
+                <div class="daily-content">
+
+                    <div class="daily-label">
+                        ЗАДАНИЕ НА СЕГОДНЯ
+                    </div>
+
+                    <h2 id="dailyTitle">
+                        Подпишись на канал
+                    </h2>
+
+                    <p id="dailyDescription">
+                        Выполни задание и получи дополнительные очки.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="reward-card">
+
+                <div>
+                    НАГРАДА
+                </div>
+
+                <strong id="dailyReward">
+                    +25 PTS
+                </strong>
+
+            </div>
+
+            <button
+                id="dailyButton"
+                class="primary-button"
+                onclick="completeDaily()"
+            >
+                ✅ ВЫПОЛНИТЬ ЗАДАНИЕ
+            </button>
+
+        </section>
+
+
+        <!-- ================= TOP ================= -->
+
+        <section
+            id="page-top"
+            class="page"
+        >
+
+            <div class="page-title">
+                <span>🏆</span>
+                ТОП ИГРОКОВ
+            </div>
+
+            <div
+                id="leaderboard"
+                class="leaderboard"
+            ></div>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section
+            id="page-stats"
+            class="page"
+        >
+
+            <div class="page-title">
+                <span>📊</span>
+                МОЯ СТАТИСТИКА
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        ⚡
+                    </span>
+
+                    <strong id="statPoints">
+                        0
+                    </strong>
+
+                    <small>
+                        ОЧКОВ
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        🎯
+                    </span>
+
+                    <strong id="statAccuracy">
+                        0%
+                    </strong>
+
+                    <small>
+                        ТОЧНОСТЬ
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        🔮
+                    </span>
+
+                    <strong id="statPredictions">
+                        0
+                    </strong>
+
+                    <small>
+                        ПРОГНОЗОВ
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">
+                        ✅
+                    </span>
+
+                    <strong id="statCorrect">
+                        0
+                    </strong>
+
+                    <small>
+                        ВЕРНЫХ
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-card">
+
+                <div class="avatar">
+                    <span id="avatarLetter">
+                        P
+                    </span>
+                </div>
+
+                <div class="profile-info">
+
+                    <strong id="profileName">
+                        Игрок
+                    </strong>
+
+                    <span>
+                        Участник Pick'em
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <button
+            class="nav-item active"
+            data-page="pickem"
+        >
+
+            <span>🎯</span>
+            <small>PICK'EM</small>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="daily"
+        >
+
+            <span>⚡</span>
+            <small>ЕЖЕДНЕВКА</small>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="top"
+        >
+
+            <span>🏆</span>
+            <small>ТОП</small>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="stats"
+        >
+
+            <span>📊</span>
+            <small>СТАТЫ</small>
+
+        </button>
+
+    </nav>
+
+</div>
+
+
+<!-- ================= PREDICTION MODAL ================= -->
+
+<div
+    id="predictionModal"
+    class="modal hidden"
+>
+
+    <div
+        class="modal-overlay"
+        onclick="closePrediction()"
+    ></div>
+
+    <div class="modal-content">
+
+        <button
+            class="modal-close"
+            onclick="closePrediction()"
+        >
+            ×
+        </button>
+
+        <div class="modal-label">
+            🔮 ПРОГНОЗ
+        </div>
+
+        <h2 id="modalMatchTitle">
+            Team A vs Team B
+        </h2>
+
+
+        <!-- WINNER -->
+
+        <div class="form-section">
+
+            <div class="form-label">
+                КТО ПОБЕДИТ?
+            </div>
+
+            <div class="team-buttons">
+
+                <button
+                    id="team1Button"
+                    class="team-button"
+                    onclick="selectWinner(1)"
+                >
+                    Team A
+                </button>
+
+                <button
+                    id="team2Button"
+                    class="team-button"
+                    onclick="selectWinner(2)"
+                >
+                    Team B
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="form-section">
+
+            <div class="form-label">
+                ТОЧНЫЙ СЧЁТ
+            </div>
+
+            <div class="score-inputs">
+
+                <input
+                    id="score1"
+                    type="number"
+                    min="0"
+                    max="99"
+                    placeholder="0"
+                >
+
+                <span>:</span>
+
+                <input
+                    id="score2"
+                    type="number"
+                    min="0"
+                    max="99"
+                    placeholder="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- MVP -->
+
+        <div class="form-section">
+
+            <div class="form-label">
+                MVP МАТЧА
+            </div>
+
+            <input
+                id="mvpInput"
+                class="text-input"
+                type="text"
+                maxlength="32"
+                placeholder="Введите ник игрока"
+            >
+
+        </div>
+
+
+        <button
+            class="primary-button submit-button"
+            onclick="submitPrediction()"
+        >
+            🔥 СОХРАНИТЬ ПРОГНОЗ
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast"
+>
+    <span id="toastText"></span>
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
