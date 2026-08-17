@@ -22,7 +22,7 @@ if (tg) {
 |
 */
 
-const API_URL = "https://pickem-ldzi.onrender.com";
+const API_URL = "https://pickem-1.onrender.com";
 
 
 let currentUser = null;
